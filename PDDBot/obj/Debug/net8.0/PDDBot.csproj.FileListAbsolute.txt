@@ -16,3 +16,4 @@ C:\Users\Vladimir\OneDrive\Desktop\Мои разработки\PDDBot\PDDBot\obj
 C:\Users\Vladimir\OneDrive\Desktop\Мои разработки\PDDBot\PDDBot\obj\Debug\net8.0\PDDBot.genruntimeconfig.cache
 C:\Users\Vladimir\OneDrive\Desktop\Мои разработки\PDDBot\PDDBot\obj\Debug\net8.0\ref\PDDBot.dll
 C:\Users\Vladimir\OneDrive\Desktop\Мои разработки\PDDBot\PDDBot\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Vladimir\OneDrive\Desktop\Мои разработки\PDDBot\PDDBot\obj\Debug\net8.0\PDDBot.sourcelink.json

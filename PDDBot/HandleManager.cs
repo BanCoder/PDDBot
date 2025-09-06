@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -122,7 +123,8 @@ namespace PDDBot
 		}
 		private static async Task SendLongMessage(ITelegramBotClient botClient, long chatId, string text, IReplyMarkup replyMarkup, CancellationToken ct)
 		{
-			if (text.Length <= 4096)
+			int maxWordLength = 4096; 
+			if (text.Length <= maxWordLength)
 			{
 				await botClient.SendTextMessageAsync(
 					chatId: chatId,
@@ -133,14 +135,27 @@ namespace PDDBot
 			}
 			else
 			{
-				using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(text)))
+				for (int i = 0; i < text.Length; i+=maxWordLength)
 				{
-					await botClient.SendDocumentAsync(
+					int length = Math.Min(maxWordLength, text.Length - i);
+					string part = text.Substring(i, length);
+					IReplyMarkup currentReplyMarkup; 
+					if(i == 0)
+					{
+						currentReplyMarkup = replyMarkup; 
+					}
+					else
+					{
+						currentReplyMarkup = null; 
+					}
+						await botClient.SendTextMessageAsync(
 						chatId: chatId,
-						document: InputFile.FromStream(stream, "Теория.txt"),
-						caption: "Текст теории (слишком длинный для сообщения)",
-						replyMarkup: replyMarkup,
-						cancellationToken: ct);
+						text: part,
+						parseMode: ParseMode.Html,
+						replyMarkup: currentReplyMarkup,
+						cancellationToken: ct
+						);
+					await Task.Delay(100, ct);
 				}
 			}
 		}

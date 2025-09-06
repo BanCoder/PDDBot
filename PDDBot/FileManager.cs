@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO; 
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace PDDBot
 				string[] files = Directory.GetFiles("Теория", $"{sectionName.Substring(sectionName.IndexOf('.') + 1).Trim()}.txt", SearchOption.AllDirectories);
 				if (files.Length > 0)
 				{
-					return System.IO.File.ReadAllText(files[0], Encoding.UTF8);
+					return File.ReadAllText(files[0], Encoding.UTF8);
 				}
 				else
 				{
