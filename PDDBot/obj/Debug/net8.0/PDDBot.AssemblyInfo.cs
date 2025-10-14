@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PDDBot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+694cc97b553f56cc0e0c1a176af59488a98e6f4d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1beabca10999d805e51669d30c17bfbdd9be1404")]
 [assembly: System.Reflection.AssemblyProductAttribute("PDDBot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PDDBot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
