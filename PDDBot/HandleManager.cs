@@ -14,7 +14,7 @@ namespace PDDBot
 	//Обработчик дейстивий пользователя(запуск бота)
 	internal class HandleManager
 	{
-		private static string _token { get; set; } = "7235469103:AAHCVjfV1jbQmhTaxrFSq2FNJl767Gsqdz4";
+		private static string _token = App.Settings.Token;
 		private static TelegramBotClient _client;
 		private static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
 		{

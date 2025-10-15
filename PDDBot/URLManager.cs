@@ -42,14 +42,14 @@ namespace PDDBot
 		public static async Task GetTrafficSignURL(ITelegramBotClient botClient, long chatId, CancellationToken ct, string message)
 		{
 			SectionShower.AddToNavigationHistory(chatId, message);
-			const string warningSignsURL = "https://www.drom.ru/pdd/pdd/signs/#63035";
-			const string prioritySignsURL = "https://www.drom.ru/pdd/pdd/signs/#65324";
-			const string forbiddingSignsURL = "https://www.drom.ru/pdd/pdd/signs/#65325";
-			const string prescriptiveSignsURL = "https://www.drom.ru/pdd/pdd/signs/#65326";
-			const string signsOfSpecialRegulationsURL = "https://www.drom.ru/pdd/pdd/signs/#69610";
-			const string informationSignsURL = "https://www.drom.ru/pdd/pdd/signs/#65328";
-			const string serviceSignsURL = "https://www.drom.ru/pdd/pdd/signs/#65329";
-			const string additionalInformationSignsURL = "https://www.drom.ru/pdd/pdd/signs/#65331";
+			string warningSignsURL = App.Settings.warningSignsURL;
+			string prioritySignsURL = App.Settings.prioritySignsURL;
+			string forbiddingSignsURL = App.Settings.forbiddingSignsURL;
+			string prescriptiveSignsURL = App.Settings.prescriptiveSignsURL;
+			string signsOfSpecialRegulationsURL = App.Settings.signsOfSpecialRegulationsURL;
+			string informationSignsURL = App.Settings.informationSignsURL;
+			string serviceSignsURL = App.Settings.serviceSignsURL;
+			string additionalInformationSignsURL = App.Settings.additionalInformationSignsURL;
 			switch (message)
 			{
 				case "1.Предупреждающие знаки":
