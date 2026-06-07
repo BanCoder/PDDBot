@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PDDBot
 {
-	internal class AppSettings
+	public class AppSettings
 	{
 		public required string Token { get; set; }
 		public required string warningSignsURL { get; set; }

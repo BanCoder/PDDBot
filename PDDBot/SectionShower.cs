@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 
 namespace PDDBot
 {
 	//Отображение кнопок главных секций(разделов ПДД)
-	internal class SectionShower
+	public class SectionShower
 	{
-		private static Dictionary<long, Stack<string>> _userNavigationHistory;
-		public SectionShower()
-		{
-			_userNavigationHistory = new Dictionary<long, Stack<string>>(); 
-		}
+		private static Dictionary<long, Stack<string>> _userNavigationHistory = new();
 		public static async Task ShowMainMenu(ITelegramBotClient botClient, long chatId, CancellationToken ct)
 		{
 			if (_userNavigationHistory.ContainsKey(chatId))

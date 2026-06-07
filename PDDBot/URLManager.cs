@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
 namespace PDDBot
 {
 	//Менеджер выдачи url-ссылок для нужного пункта 
-	internal class URLManager
+	public class URLManager
 	{
 		public static async Task GetMarkUpURL(ITelegramBotClient botClient, long chatId, CancellationToken ct, string message)
 		{

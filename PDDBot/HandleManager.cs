@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Text.RegularExpressions;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -12,92 +8,89 @@ using Telegram.Bot.Types.ReplyMarkups;
 namespace PDDBot
 {
 	//Обработчик дейстивий пользователя(запуск бота)
-	internal class HandleManager
+	public class HandleManager
 	{
 		private static string _token = App.Settings.Token;
 		private static TelegramBotClient _client;
 		private static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
 		{
-			if (update.Message?.Text is { } messageText)
+			try
 			{
-				Console.WriteLine($"Получено сообщение: {messageText}");
-				switch (messageText)
+				if (update.Message?.Text is { } messageText)
 				{
-					case "/start":
-						await SectionShower.ShowMainMenu(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
+					Console.WriteLine($"Получено сообщение: {messageText}");
+					switch (messageText)
+					{
+						case "/start":
+							await SectionShower.ShowMainMenu(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
 
-					case "Правила дорожного движения":
-						await SectionShower.ShowPddSections(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
-					case "Дорожные знаки":
-						await SectionShower.ShowTrafficSignSections(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
-					case "1.Предупреждающие знаки":
-					case "2.Знаки приоритета":
-					case "3.Запрещающие знаки":
-					case "4.Предписывающие знаки":
-					case "5.Знаки особых предписаний":
-					case "6.Информационные знаки":
-					case "7.Знаки сервиса":
-					case "8.Знаки доп.информации":
-						await URLManager.GetTrafficSignURL(botClient, update.Message.Chat.Id, cancellationToken, messageText); 
-						break; 
-					case "Дорожная разметка":
-						await SectionShower.ShowTrafficMarkUpSections(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
-					case "1.Горизонтальная разметка":
-					case "2.Вертикальная разметка":
-						await URLManager.GetMarkUpURL(botClient, update.Message.Chat.Id, cancellationToken, messageText);
-						break;
-					case "Перечень неисправностей":
-						await SectionShower.ShowMalfunctionsList(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
-					case "Основные положения по допуску":
-						await SectionShower.ShowAdmissionProvisions(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
-					case "Штрафы":
-						await SectionShower.ShowPenalties(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
-					case "Назад на главную":
-						await SectionShower.ShowMainMenu(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
-					case "Назад":
-						await HandleBackCommand(botClient, update.Message.Chat.Id, cancellationToken);
-						break;
-					default:
-						if (messageText.StartsWith("1.") || messageText.StartsWith("2.") ||
-							messageText.StartsWith("3.") || messageText.StartsWith("4.") ||
-							messageText.StartsWith("5.") || messageText.StartsWith("6.") ||
-							messageText.StartsWith("7.") || messageText.StartsWith("8.") ||
-							messageText.StartsWith("9.") || messageText.StartsWith("10.") ||
-							messageText.StartsWith("11.") || messageText.StartsWith("12.") ||
-							messageText.StartsWith("13.") || messageText.StartsWith("14.") ||
-							messageText.StartsWith("15.") || messageText.StartsWith("16.") ||
-							messageText.StartsWith("17.") || messageText.StartsWith("18.") ||
-							messageText.StartsWith("19.") || messageText.StartsWith("20.") ||
-							messageText.StartsWith("21.") || messageText.StartsWith("22.") ||
-							messageText.StartsWith("23.") || messageText.StartsWith("24.") ||
-							messageText.StartsWith("25.") || messageText.StartsWith("26."))
-						{
-							string theoryText = FileManager.ReadTheoryFromFile(messageText);
-							await SendLongMessage(
-							botClient,
-							update.Message.Chat.Id,
-							$"'{messageText}'\n\n{theoryText}",
-							ButtonManager.GetBackButton(update.Message.Chat.Id),
-							cancellationToken);
-						}
-						else
-						{
-							await botClient.SendTextMessageAsync(
-								chatId: update.Message.Chat.Id,
-								text: "Неизвестная команда!",
-								cancellationToken: cancellationToken);
-						}
-						break;
+						case "Правила дорожного движения":
+							await SectionShower.ShowPddSections(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
+						case "Дорожные знаки":
+							await SectionShower.ShowTrafficSignSections(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
+						case "1.Предупреждающие знаки":
+						case "2.Знаки приоритета":
+						case "3.Запрещающие знаки":
+						case "4.Предписывающие знаки":
+						case "5.Знаки особых предписаний":
+						case "6.Информационные знаки":
+						case "7.Знаки сервиса":
+						case "8.Знаки доп.информации":
+							await URLManager.GetTrafficSignURL(botClient, update.Message.Chat.Id, cancellationToken, messageText);
+							break;
+						case "Дорожная разметка":
+							await SectionShower.ShowTrafficMarkUpSections(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
+						case "1.Горизонтальная разметка":
+						case "2.Вертикальная разметка":
+							await URLManager.GetMarkUpURL(botClient, update.Message.Chat.Id, cancellationToken, messageText);
+							break;
+						case "Перечень неисправностей":
+							await SectionShower.ShowMalfunctionsList(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
+						case "Основные положения по допуску":
+							await SectionShower.ShowAdmissionProvisions(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
+						case "Штрафы":
+							await SectionShower.ShowPenalties(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
+						case "Назад на главную":
+							await SectionShower.ShowMainMenu(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
+						case "Назад":
+							await HandleBackCommand(botClient, update.Message.Chat.Id, cancellationToken);
+							break;
+						default:
+							if (Regex.IsMatch(messageText, @"^\d+\."))
+							{
+								string theoryText = FileManager.ReadTheoryFromFile(messageText);
+								await SendLongMessage(
+								botClient,
+								update.Message.Chat.Id,
+								$"'{messageText}'\n\n{theoryText}",
+								ButtonManager.GetBackButton(update.Message.Chat.Id),
+								cancellationToken);
+							}
+							else
+							{
+								await botClient.SendTextMessageAsync(
+									chatId: update.Message.Chat.Id,
+									text: "Неизвестная команда!",
+									cancellationToken: cancellationToken);
+							}
+							break;
+					}
 				}
 			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Ошибка: {ex.Message}");
+				await botClient.SendTextMessageAsync(chatId: update.Message.Chat.Id, "Произошла ошибка. Попробуйте позже.");
+			}
+			
 		}
 		private static Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
 		{
@@ -106,7 +99,6 @@ namespace PDDBot
 		}
 		public void Starter()
 		{
-			SectionShower sectionShower = new SectionShower();
 			_client = new TelegramBotClient(_token);
 			var receiverOptions = new ReceiverOptions
 			{

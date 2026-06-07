@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO; 
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace PDDBot
 {
 	//Менеджер выгрузки теории из файла в сообщение бота
-	internal class FileManager
+	public class FileManager
 	{
 		public static string ReadTheoryFromFile(string sectionName)
 		{
